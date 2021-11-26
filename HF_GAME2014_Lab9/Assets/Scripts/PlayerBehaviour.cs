@@ -26,6 +26,9 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Animation")]
     public PlayerAnimationState state;
 
+    [Header("Audio FX")]
+    public AudioSource jumpSound;
+
     private Rigidbody2D playerRB;
     private Animator playerAnimationController;
     private string animationState = "AnimationState";
@@ -34,6 +37,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody2D>();
         playerAnimationController = GetComponent<Animator>();
+        jumpSound = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -52,6 +56,11 @@ public class PlayerBehaviour : MonoBehaviour
             // keyboard input    
             float y = (Input.GetAxisRaw("Vertical") + joystick.Vertical) * sensitivity;
             float jump = Input.GetAxisRaw("Jump") + ((UIController.jumpButtonDown) ? 1.0f : 0.0f);
+
+            if(jump > 0)
+            {
+                jumpSound.Play();
+            }
 
             if (x != 0)
             {
